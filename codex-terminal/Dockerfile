@@ -22,13 +22,10 @@ RUN apk add --no-cache \
     tmux \
     yq
 
-# Install Claude Code CLI using native installer
-# The installer places the binary in ~/.local/bin
-RUN curl -fsSL https://claude.ai/install.sh | bash \
-    && ln -sf /root/.local/bin/claude /usr/local/bin/claude
+# Install OpenAI Codex CLI
+RUN npm i -g @openai/codex
 
-# Create directory for Claude configuration and set working directory
-RUN mkdir -p /config/claude-config
+# Working directory for Home Assistant config access
 WORKDIR /config
 
 # Copy startup script and modular scripts

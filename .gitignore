@@ -33,4 +33,6 @@ dist/
 # Operating System Files
 .DS_Store
 Thumbs.db
-.claude/
+
+# Local CLI state
+.codex/
