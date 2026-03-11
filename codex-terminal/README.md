@@ -2,7 +2,12 @@
 
 A secure, web-based terminal with OpenAI Codex CLI pre-installed for Home Assistant.
 
-![Codex Terminal Screenshot](https://github.com/heytcass/home-assistant-addons/raw/main/codex-terminal/screenshot.png)
+## Credits
+
+This add-on is ported from the original Claude Terminal add-on by Tom Cassady ([@heytcass](https://github.com/heytcass)).
+This repository builds on that original work by replacing Claude-specific implementation details with Codex CLI.
+
+![Codex Terminal Screenshot](https://github.com/moosnelly/ha-codex/raw/main/codex-terminal/screenshot.png)
 
 ## Features
 
@@ -25,7 +30,7 @@ persist-install pip requests
 
 ## Installation
 
-1. Add this repository to Home Assistant add-on repositories.
+1. Add `https://github.com/moosnelly/ha-codex` to Home Assistant add-on repositories.
 2. Install **Codex Terminal**.
 3. Start the add-on.
 4. Open the Web UI.
@@ -54,6 +59,7 @@ Persistent Codex state is stored in `CODEX_HOME=/data/.codex`.
 Breaking change in v2:
 - Add-on slug changed from `claude_terminal` to `codex_terminal`.
 - Existing users must install the new add-on identity and migrate settings manually.
+- Runtime compatibility: `auto_launch_claude` is accepted only as a deprecated fallback when `auto_launch_codex` is unset.
 
 ## License
 
