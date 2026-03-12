@@ -16,6 +16,7 @@ Codex Terminal provides an ingress web terminal for Home Assistant with OpenAI C
 Optional settings:
 
 - `auto_launch_codex` (default: `true`)
+- `terminal_scrollback_lines` (default: `100000`)
 - `persistent_apk_packages` (default: `[]`)
 - `persistent_pip_packages` (default: `[]`)
 
@@ -45,6 +46,7 @@ State persistence:
 1. Check add-on logs from Home Assistant.
 2. Verify network access to `api.openai.com`.
 3. If terminal disconnects, refresh and reconnect; tmux sessions persist.
+4. Mouse wheel scroll should navigate terminal history; increase `terminal_scrollback_lines` if history feels short.
 
 ## Security
 

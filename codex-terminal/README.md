@@ -40,6 +40,7 @@ persist-install pip requests
 | Option | Default | Description |
 |---|---|---|
 | `auto_launch_codex` | `true` | Auto-start Codex on terminal open |
+| `terminal_scrollback_lines` | `100000` | Terminal and tmux history depth for scrollback |
 | `persistent_apk_packages` | `[]` | APK packages to install on startup |
 | `persistent_pip_packages` | `[]` | pip packages to install on startup |
 

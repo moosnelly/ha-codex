@@ -16,6 +16,7 @@ This add-on provides a web-based terminal with Codex pre-installed and launches 
 ## Configuration
 
 - `auto_launch_codex` (default `true`)
+- `terminal_scrollback_lines` (default `100000`)
 - `persistent_apk_packages`
 - `persistent_pip_packages`
 
@@ -34,6 +35,8 @@ The terminal starts in `/config`.
 Session behavior:
 - Auto-launch mode starts Codex in tmux.
 - Session-picker mode allows reconnect/new/custom command/bash.
+- Mouse wheel scrolling works in the terminal and traverses tmux history.
+- Use `terminal_scrollback_lines` to tune retained terminal history.
 
 ## Authentication
 

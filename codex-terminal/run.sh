@@ -3,6 +3,39 @@
 set -e
 set -o pipefail
 
+get_terminal_scrollback_lines() {
+    local default_lines=100000
+    local min_lines=1000
+    local max_lines=500000
+    local configured_lines
+
+    if bashio::config.has_value 'terminal_scrollback_lines'; then
+        configured_lines=$(bashio::config 'terminal_scrollback_lines')
+    else
+        configured_lines="$default_lines"
+    fi
+
+    if ! [[ "$configured_lines" =~ ^[0-9]+$ ]]; then
+        bashio::log.warning "Invalid terminal_scrollback_lines value '${configured_lines}'. Using default ${default_lines}."
+        echo "$default_lines"
+        return
+    fi
+
+    if [ "$configured_lines" -lt "$min_lines" ]; then
+        bashio::log.warning "terminal_scrollback_lines ${configured_lines} is below minimum ${min_lines}. Clamping to ${min_lines}."
+        echo "$min_lines"
+        return
+    fi
+
+    if [ "$configured_lines" -gt "$max_lines" ]; then
+        bashio::log.warning "terminal_scrollback_lines ${configured_lines} is above maximum ${max_lines}. Clamping to ${max_lines}."
+        echo "$max_lines"
+        return
+    fi
+
+    echo "$configured_lines"
+}
+
 init_environment() {
     local data_home="/data/home"
     local config_dir="/data/.config"
@@ -196,17 +229,18 @@ get_auto_launch_codex() {
 }
 
 get_codex_launch_command() {
+    local history_limit="$1"
     local auto_launch_codex
     auto_launch_codex=$(get_auto_launch_codex)
 
     if [ "$auto_launch_codex" = "true" ]; then
-        echo "tmux new-session -A -s codex 'codex'"
+        echo "tmux set-option -g history-limit ${history_limit} >/dev/null 2>&1; tmux new-session -A -s codex 'codex'"
     else
         if [ -f /usr/local/bin/codex-session-picker ]; then
-            echo "tmux new-session -A -s codex-picker '/usr/local/bin/codex-session-picker'"
+            echo "tmux set-option -g history-limit ${history_limit} >/dev/null 2>&1; tmux new-session -A -s codex-picker '/usr/local/bin/codex-session-picker'"
         else
             bashio::log.warning "Session picker not found, falling back to auto-launch"
-            echo "tmux new-session -A -s codex 'codex'"
+            echo "tmux set-option -g history-limit ${history_limit} >/dev/null 2>&1; tmux new-session -A -s codex 'codex'"
         fi
     fi
 }
@@ -219,8 +253,12 @@ start_web_terminal() {
     bashio::log.info "CODEX_HOME=${CODEX_HOME}"
     bashio::log.info "HOME=${HOME}"
 
+    local terminal_scrollback_lines
+    terminal_scrollback_lines=$(get_terminal_scrollback_lines)
+    bashio::log.info "Terminal scrollback lines: ${terminal_scrollback_lines}"
+
     local launch_command
-    launch_command=$(get_codex_launch_command)
+    launch_command=$(get_codex_launch_command "$terminal_scrollback_lines")
 
     local auto_launch_codex
     auto_launch_codex=$(get_auto_launch_codex)
@@ -236,6 +274,7 @@ start_web_terminal() {
         --client-option enableReconnect=true \
         --client-option reconnect=10 \
         --client-option reconnectInterval=5 \
+        --client-option scrollback="${terminal_scrollback_lines}" \
         bash -c "$launch_command"
 }
 
