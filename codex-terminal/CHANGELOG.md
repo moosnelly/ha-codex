@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.0.1
+
+### Added
+- Added optional `terminal_scrollback_lines` configuration (default `100000`) to tune terminal and tmux scrollback depth.
+
+### Changed
+- Wired ttyd client scrollback to the configured history limit.
+- Aligned tmux history behavior with configured scrollback for better long-session navigation.
+- Improved mouse-wheel scrolling behavior in the web terminal so history is easier to traverse.
+
+### Compatibility
+- No manual migration required for existing installations.
+- Existing installs pick up defaults automatically after update + add-on restart.
+
 ## 2.0.0
 
 ### Breaking

@@ -35,6 +35,8 @@ persist-install pip requests
 3. Start the add-on.
 4. Open the Web UI.
 
+For existing installations, update the add-on and restart once to apply new scrollback behavior. No manual migration is required.
+
 ## Configuration
 
 | Option | Default | Description |

@@ -11,6 +11,9 @@ Codex Terminal provides an ingress web terminal for Home Assistant with OpenAI C
 3. Start the add-on.
 4. Open **Web UI** or the sidebar panel.
 
+For existing installations:
+- Update to the latest add-on version and restart the add-on once. No manual migration is required.
+
 ## Configuration
 
 Optional settings:

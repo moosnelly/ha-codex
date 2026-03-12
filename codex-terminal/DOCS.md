@@ -13,6 +13,9 @@ This add-on provides a web-based terminal with Codex pre-installed and launches 
 3. Start the add-on.
 4. Open Web UI.
 
+For existing installations:
+- Update to the latest add-on version and restart the add-on once to apply new scrollback behavior.
+
 ## Configuration
 
 - `auto_launch_codex` (default `true`)
